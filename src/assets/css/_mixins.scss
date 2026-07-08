@@ -1,0 +1,118 @@
+@use './variables' as *;
+
+@mixin flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin icon-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: flex-start;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-align-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin base-card {
+  background: $background;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+}
+
+@mixin icon-container-base {
+  app-overview-icons {
+    @include icon-center;
+    flex-shrink: 0;
+
+    svg {
+      display: block;
+    }
+  }
+}
+
+@mixin icon-container-size($size, $radius: null, $important: false) {
+  app-overview-icons {
+    width: $size;
+    height: $size;
+
+    @if $radius !=null {
+      border-radius: $radius;
+    }
+
+    @if $important {
+      svg {
+        width: $size !important;
+        height: $size !important;
+      }
+    }
+
+    @else {
+      svg {
+        width: $size;
+        height: $size;
+      }
+    }
+  }
+}
+
+@mixin datepicker-control-base($radius: 8px) {
+  border: 1px solid $sl-border-soft;
+  background: $background;
+  border-radius: $radius;
+  color: $sl-text-body;
+}
+
+@mixin filled-pill($bg,
+  $color,
+  $radius: 10px,
+  $padding: 1px 9px,
+  $font-size: 12px,
+  $font-weight: 600) {
+  background: $bg;
+  color: $color;
+  padding: $padding;
+  border-radius: $radius;
+  font-size: $font-size;
+  font-weight: $font-weight;
+}
+
+@mixin outlined-pill($border-color,
+  $text-color,
+  $radius: 12px,
+  $padding: 2px 8px,
+  $font-size: 9px,
+  $font-weight: 500,
+  $bg: #E2E8EE) {
+  border: 1px solid $border-color;
+  border-radius: $radius;
+  padding: $padding;
+  font-size: $font-size;
+  font-weight: $font-weight;
+  color: $text-color;
+  background: $bg;
+}

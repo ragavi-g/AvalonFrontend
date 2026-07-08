@@ -1,0 +1,16 @@
+<div class="app-shell d-flex flex-column" [class.sidebar-open]="sidebarOpen()">
+  <app-topbar [sidebarOpen]="sidebarOpen()" (menuToggle)="toggleSidebar()"></app-topbar>
+
+  <div class="app-workspace d-flex flex-grow-1 overflow-hidden">
+    <div class="sidebar-gutter flex-shrink-0 d-flex align-self-stretch" [class.is-open]="sidebarOpen()">
+      <app-leftsidebar [isOpen]="sidebarOpen()"></app-leftsidebar>
+    </div>
+
+    <div class="app-content d-flex flex-column flex-grow-1 min-w-0">
+      <main class="app-main flex-grow-1 min-w-0">
+        <router-outlet></router-outlet>
+      </main>
+      <app-footer></app-footer>
+    </div>
+  </div>
+</div>

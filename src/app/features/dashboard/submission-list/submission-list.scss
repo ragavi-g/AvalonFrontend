@@ -1,0 +1,978 @@
+@use '../../../../assets/css/variables' as *;
+@use '../../../../assets/css/mixins' as *;
+
+.submission-list-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 95px);
+  min-height: 0;
+  background: $overall-bg;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.submission-list-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: #f7f9fc;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.submission-list-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  background: $background;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 12px;
+
+  &--accounts {
+    border-right: 1px solid $border;
+  }
+}
+
+.submission-list-panel__placeholder {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 1rem;
+}
+
+.submission-list-panel__label {
+  font-size: 22px;
+  font-weight: $font-weight-600;
+  color: #16345f;
+}
+
+.submission-list-panel--activity {
+  min-height: 0;
+}
+
+.submission-list-panel--activity .submission-list-panel__placeholder {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.submission-list-panel--accounts>header {
+  @include flex-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.submission-list-panel--accounts>header>div:first-child {
+  @include flex-align-center;
+  gap: 12px;
+}
+
+.submission-list-panel--accounts>header>div:first-child h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: $sl-accent;
+}
+
+.submission-list-panel--accounts>header>div:first-child span {
+  @include filled-pill($sl-accent-soft, $sl-accent);
+}
+
+.submission-list-panel--accounts>header>div:last-child {
+  width: 180px;
+  height: 30px;
+  border: 1px solid $sl-border-light;
+  border-radius: 10px;
+  @include flex-align-center;
+  gap: 7px;
+  padding: 0 8px;
+  flex-shrink: 0;
+
+  input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 11px;
+    background: transparent;
+  }
+}
+
+.submission-list-panel--accounts>header>div:last-child i {
+  font-size: 12px;
+  color: $sl-muted;
+}
+
+.submission-list-panel--accounts>header>div:last-child i:last-child {
+  font-size: 10px;
+  color: $sl-muted;
+  cursor: pointer;
+}
+
+.account-list-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+  margin-right: -4px;
+  margin-top: 20px;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #d7dce3;
+    border-radius: 4px;
+  }
+}
+
+.account-list-content>ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.account-card {
+  padding: 12px;
+  border-radius: 8px;
+  @include flex-between;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: 1px solid $sl-card-border;
+
+  &:hover:not(.active-card) {
+    background: $sl-hover-bg;
+  }
+}
+
+.active-card {
+  background: $sl-active-bg !important;
+  border: 1px solid $sl-accent-dark !important;
+}
+
+.account-card>div:first-child {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.account-card>div:last-child {
+  @include flex-align-center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.account-card>div:last-child>div {
+  @include flex-align-center;
+  gap: 12px;
+  min-width: 40px;
+  justify-content: flex-end;
+}
+
+.account-card>div:last-child>div>div {
+  width: 18px;
+  height: 18px;
+  @include icon-center;
+}
+
+.account-card>div:first-child h5 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: $sl-title-blue;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.account-card>div:first-child h5.account-card-title--green {
+  color: $sl-title-green;
+}
+
+.account-card>div:first-child>div {
+  @include flex-align-center;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.account-card>div:first-child>div>span:first-child {
+  @include outlined-pill(#C9D5E5, $sl-muted-dark);
+  cursor: default;
+}
+
+.account-card>div:first-child>div>span:last-child {
+  @include flex-align-center;
+  font-size: 10px;
+  color: $black;
+  font-weight: 400;
+  gap: 6px;
+  cursor: default;
+
+  i {
+    font-size: 3px;
+  }
+}
+
+.account-card>div:last-child>button {
+  border: none;
+  background: #E5EBF3;
+  color: $sl-accent-dark;
+  border-radius: 16px;
+  padding: 7px 14px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  border: 1.5px solid $sl-accent-dark;
+}
+
+.account-card:hover>div:last-child>button,
+.active-card>div:last-child>button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.status-item {
+  @include flex-align-center;
+  gap: 8px;
+  cursor: default;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.submission-list-panel--accounts>footer {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid $border;
+  @include flex-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.submission-list-panel--accounts>footer>div:first-child {
+  @include flex-align-center;
+  gap: 8px;
+}
+
+.submission-list-panel--accounts>footer>div:first-child>div {
+  position: relative;
+}
+
+.submission-list-panel--accounts>footer>div:first-child>div>button {
+  width: 50px;
+  height: 28px;
+  border: 1px solid $sl-border-light;
+  border-radius: 6px;
+  padding: 0 8px 0 10px;
+  font-size: 10px;
+  background: $background;
+  color: $sl-muted-dark;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    border-color: $sl-accent-dark;
+    box-shadow: 0 0 0 2px rgba(23, 57, 99, 0.2);
+  }
+
+  &:hover {
+    border-color: $sl-accent-dark;
+  }
+
+  i {
+    font-size: 9px;
+    color: $sl-muted;
+  }
+}
+
+.submission-list-panel--accounts>footer>div:first-child>div>ul {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 6px);
+  width: 100%;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  background: $background;
+  border: 1px solid $sl-border-light;
+  border-radius: 5px;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.1);
+  z-index: 10;
+}
+
+.submission-list-panel--accounts>footer>div:first-child>div>ul>li {
+  padding: 6px 10px;
+  font-size: 10px;
+  color: $sl-muted-dark;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background-color: $sl-accent-dark;
+    color: $background;
+  }
+}
+
+.submission-list-panel--accounts>footer>div:first-child>div>ul>li.selected {
+  background-color: $sl-accent-dark;
+  color: $background;
+}
+
+.submission-list-panel--accounts>footer>div:first-child span {
+  font-size: 10px;
+  color: $text-light;
+  font-weight: 400;
+}
+
+.submission-list-panel--accounts>footer>div:last-child {
+  @include flex-align-center;
+  gap: 4px;
+}
+
+.submission-list-panel--accounts>footer>div:last-child button {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid $sl-border-light;
+  background: $background;
+  color: $sl-muted-dark;
+  font-size: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover:not(:disabled) {
+    background: $sl-hover-bg;
+    border-color: $sl-pagination-hover-border;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    color: $sl-pagination-disabled;
+  }
+}
+
+.submission-list-panel--accounts>footer>div:last-child button.active-page {
+  background: $sl-accent-dark !important;
+  color: $background !important;
+  border-color: $sl-accent-dark !important;
+}
+
+.account-list-tooltip {
+  --bs-tooltip-bg: #{$background};
+  --bs-tooltip-color: #{$sl-tooltip-text};
+  --bs-tooltip-opacity: 1;
+
+  .tooltip-inner {
+    background: $background;
+    color: $sl-accent-dark;
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid $sl-tooltip-border;
+
+    box-shadow:
+      0 4px 10px rgba(15, 23, 42, 0.08),
+      0 1px 3px rgba(15, 23, 42, 0.06);
+
+    max-width: max-content;
+  }
+
+  .tooltip-arrow::before {
+    border-top-color: $background !important;
+  }
+}
+
+.execute-task-section {
+  margin-bottom: 20px;
+  overflow: visible;
+  position: relative;
+  z-index: 2;
+}
+
+.execute-task-title {
+  margin: 0 0 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #16345f;
+}
+
+.execute-task-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  overflow: visible;
+  position: relative;
+}
+
+.sl-dropdown {
+  position: relative;
+  flex: 1;
+  min-width: 140px;
+  max-width: 220px;
+
+  &.open .sl-dropdown-chevron {
+    transform: rotate(180deg);
+  }
+}
+
+.sl-dropdown-trigger {
+  width: 100%;
+  height: 36px;
+  margin: 0;
+  border: 1px solid #d7dce3;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  line-height: 1.2;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  appearance: none;
+  box-shadow: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: #94a3b8;
+    background: #ffffff;
+    color: #374151;
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.sl-dropdown-chevron {
+  font-size: 10px;
+  color: #6b7280;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+// sl- prefix avoids Bootstrap .dropdown-menu { display: none }
+.sl-dropdown-menu {
+  display: block;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.sl-dropdown-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  list-style: none;
+
+  &:hover,
+  &.selected {
+    background: #f1f5f9;
+  }
+}
+
+.sl-dropdown-item-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #16345f;
+  line-height: 1.3;
+}
+
+.sl-dropdown-item-desc {
+  display: block;
+  margin-top: 2px;
+  font-size: 10px;
+  color: #6b7280;
+  line-height: 1.3;
+}
+
+.execute-btn {
+  height: 36px;
+  margin: 0;
+  padding: 0 20px;
+  border: none;
+  border-radius: 19px;
+  background: #173963;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  line-height: 1.2;
+  cursor: pointer;
+  white-space: nowrap;
+  appearance: none;
+  box-shadow: none;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+
+  &:hover {
+    background: #11468b;
+    color: #ffffff;
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(219, 219, 219, 0.45);
+  }
+}
+
+.activity-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
+.activity-section-title {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #16345f;
+}
+
+.activity-section-account {
+  font-size: 14px;
+  font-weight: 500;
+  color: #3b82f6;
+
+  &--green {
+    color: #16a34a;
+  }
+}
+
+.activity-section-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-right: -4px;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #d7dce3;
+    border-radius: 4px;
+  }
+}
+
+.activity-empty {
+  margin: 0;
+  padding: 48px 16px;
+  text-align: center;
+  font-size: 10px;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.activity-timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-timeline-item {
+  display: flex;
+  gap: 10px;
+  position: relative;
+  padding-bottom: 12px;
+
+  &:last-child {
+    padding-bottom: 0;
+
+    .activity-timeline-rail::after {
+      display: none;
+    }
+  }
+}
+
+.activity-timeline-rail {
+  position: relative;
+  flex-shrink: 0;
+  width: 34px;
+  display: flex;
+  justify-content: center;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 34px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    bottom: -12px;
+    background: #e5e7eb;
+  }
+}
+
+.activity-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+  font-size: 12px;
+  color: #ffffff;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+
+  &-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+  }
+
+  &--green {
+    border-color: #10b981;
+    background: #ecfdf5;
+  }
+
+  &--purple {
+    border-color: #8b5cf6;
+    background: #f5f3ff;
+  }
+
+  &--blue {
+    border-color: #3b82f6;
+    background: #eff6ff;
+  }
+
+  &--teal {
+    border-color: #14b8a6;
+    background: #f0fdfa;
+  }
+
+  &--orange {
+    border-color: #f59e0b;
+    background: #fffbeb;
+  }
+
+  &--default {
+    border-color: #d1d5db;
+    background: #f9fafb;
+  }
+}
+
+.activity-timeline-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.activity-date {
+  font-size: 10px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.activity-user {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.activity-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #16345f;
+  color: #dce7f5;
+  font-size: 10px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.activity-user-name {
+  font-size: 10px;
+  color: #374151;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.activity-name {
+  display: block;
+  margin: 2px 0 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #16345f;
+  line-height: 1.2;
+}
+
+.activity-note-display {
+  width: 100%;
+  min-height: 0;
+  padding: 6px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #fafbfc;
+  font-size: 10px;
+  color: #374151;
+  line-height: 1.35;
+  cursor: text;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  word-break: break-word;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: #cbd5e1;
+  }
+}
+
+.activity-note-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 6px 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 10px;
+  color: #374151;
+  line-height: 1.35;
+  resize: vertical;
+  box-sizing: border-box;
+  font-family: inherit;
+  outline: none;
+
+  &--editing {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 1px #3b82f6;
+  }
+}
+
+.activity-note-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.btn-cancel {
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid #d7dce3;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #f8fafc;
+  }
+}
+
+.btn-save {
+  height: 28px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 6px;
+  background: #1e40af;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, opacity 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: #1d4ed8;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+}
+
+.no-results p {
+  margin: 0 0 16px 0;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.clear-search-btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #2563eb;
+  }
+}
+
+// Testing the old styles :
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+.activity-item {
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+
+.activity-title {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 600;
+  color: #16345f;
+  line-height: 1.4;
+}
+
+.activity-date {
+  font-size: 8px;
+  color: #6b7280;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.activity-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.activity-note {
+  margin: 0;
+  font-size: 9px;
+  color: #374151;
+  line-height: 1.4;
+}
+
+.activity-author {
+  font-size: 8px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+@media (max-width: 1200px) {
+  .submission-list-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .submission-list-panel--accounts>header>div:last-child {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .account-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .submission-list-panel--accounts>footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .submission-list-panel--accounts>header>div:first-child h3 {
+    font-size: 24px;
+  }
+}

@@ -1,0 +1,60 @@
+.app-shell {
+  --sidebar-width: 270px;
+  --sidebar-bg: #001939;
+  --shell-transition-duration: 0.28s;
+  --shell-transition-easing: ease;
+  --shell-transition: var(--shell-transition-duration) var(--shell-transition-easing);
+  --topbar-logo-height: 47px;
+  --topbar-logo-width: 180.3px;
+  --topbar-brand-width-collapsed: calc(2rem + 1.75rem + 0.75rem + var(--topbar-logo-width));
+  --topbar-brand-width: var(--topbar-brand-width-collapsed);
+
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow: hidden;
+
+  &.sidebar-open {
+    --topbar-brand-width: var(--sidebar-width);
+  }
+}
+
+.app-workspace {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.app-content {
+  min-height: 0;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.sidebar-gutter {
+  flex: 0 0 0;
+  width: 0;
+  min-width: 0;
+  max-width: 0;
+  overflow: hidden;
+  transition:
+    width var(--shell-transition),
+    flex-basis var(--shell-transition),
+    min-width var(--shell-transition),
+    max-width var(--shell-transition);
+  align-self: stretch;
+
+  &.is-open {
+    flex: 0 0 var(--sidebar-width);
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
+  }
+}
+
+.app-main {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}

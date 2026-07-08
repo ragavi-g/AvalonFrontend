@@ -1,0 +1,146 @@
+<ng-container [ngSwitch]="icon()">
+    <ng-container *ngSwitchCase="'sov-imported-items'">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="28" fill="#CDE0F8" />
+            <path d="M25 18H35L43 26V46C43 47.1 42.1 48 41 48H25C23.9 48 23 47.1 23 46V20C23 18.9 23.9 18 25 18Z"
+                stroke="#2563EB" stroke-width="2.5" stroke-linejoin="round" />
+            <path d="M35 18V26H43" stroke="#2563EB" stroke-width="2.5" stroke-linejoin="round" />
+            <path d="M28 33H38" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" />
+            <path d="M28 38H38" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'up-arrow'">
+        <svg class="change-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 3L12 7H9V13H7V7H4L8 3Z" fill="#16A34A" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'down-arrow'">
+        <svg class="change-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 13L4 9H7V3H9V9H12L8 13Z" fill="#DC2626" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'approval-list'">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="28" fill="#D9F4E7" />
+            <circle cx="32" cy="32" r="14" stroke="#16A34A" stroke-width="2.5" />
+            <path d="M26 32L30 36L38 28" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'submission-list'">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="28" fill="#FFE6C8" />
+            <circle cx="32" cy="32" r="14" stroke="#F59E0B" stroke-width="2.5" />
+            <path d="M32 24V32L37 35" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'bound-policies'">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="28" fill="#EEDEFE" />
+            <path d="M25 18H35L43 26V46C43 47.1 42.1 48 41 48H25C23.9 48 23 47.1 23 46V20C23 18.9 23.9 18 25 18Z"
+                stroke="#7C3AED" stroke-width="2.5" stroke-linejoin="round" />
+            <path d="M35 18V26H43" stroke="#7C3AED" stroke-width="2.5" stroke-linejoin="round" />
+            <path d="M28 33H38" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" />
+            <path d="M28 38H38" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'approved-activity'">
+        <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="28" fill="#E8F7EE" />
+            <circle cx="32" cy="32" r="14" stroke="#16A34A" stroke-width="2.5" />
+            <path d="M26 32L30 36L38 28" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'sent'">
+        <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="28" fill="#F3E8FF" />
+            <path d="M25 18H35L43 26V46C43 47.1 42.1 48 41 48H25C23.9 48 23 47.1 23 46V20C23 18.9 23.9 18 25 18Z"
+                stroke="#7C3AED" stroke-width="2.5" stroke-linejoin="round" />
+            <path d="M35 18V26H43" stroke="#7C3AED" stroke-width="2.5" stroke-linejoin="round" />
+            <path d="M28 33H38" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" />
+            <path d="M28 38H38" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'menu-icon'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="5" r="2" fill="#6B7280" />
+            <circle cx="12" cy="12" r="2" fill="#6B7280" />
+            <circle cx="12" cy="19" r="2" fill="#6B7280" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'in-review'">
+        <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="28" fill="#EAF2FF" />
+            <circle cx="32" cy="32" r="14" stroke="#2563EB" stroke-width="2.5" />
+            <path d="M32 24V32L37 35" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'received'">
+        <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="28" fill="#FFF4E5" />
+            <path d="M25 18H35L43 26V46C43 47.1 42.1 48 41 48H25C23.9 48 23 47.1 23 46V20C23 18.9 23.9 18 25 18Z"
+                stroke="#F59E0B" stroke-width="2.5" stroke-linejoin="round" />
+            <path d="M35 18V26H43" stroke="#F59E0B" stroke-width="2.5" stroke-linejoin="round" />
+            <path d="M28 33H38" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" />
+            <path d="M28 38H38" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'new-submission'">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="18" width="24" height="24" rx="3" stroke="#2563EB" stroke-width="2.5" />
+            <path d="M32 24V36" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" />
+            <path d="M26 30H38" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'upload-sov'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 48 48" fill="none">
+            <path d="M16 28c-3 0-5-2-5-5s2-5 5-5c0-4 3-7 8-7s8 3 8 7c3 0 5 2 5 5s-2 5-5 5" stroke="#10B981"
+                stroke-width="2" stroke-linecap="round" fill="none" />
+            <path d="M24 22v10M20 26l4-4 4 4" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'search-submission'">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M13 3H8.2C7.0799 3 6.51984 3 6.09202 3.21799C5.71569 3.40973 5.40973 3.71569 5.21799 4.09202C5 4.51984 5 5.0799 5 6.2V17.8C5 18.9201 5 19.4802 5.21799 19.908C5.40973 20.2843 5.71569 20.5903 6.09202 20.782C6.51984 21 7.0799 21 8.2 21H14M13 3L19 9M13 3V7.4C13 7.96005 13 8.24008 13.109 8.45399C13.2049 8.64215 13.3578 8.79513 13.546 8.89101C13.7599 9 14.0399 9 14.6 9H19M19 9V13"
+                stroke="#a57ff0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.1 11.8H15" stroke="#a57ff0" stroke-width="2" stroke-linecap="round" />
+            <path d="M9.1 14.5H13" stroke="#a57ff0" stroke-width="2" stroke-linecap="round" />
+            <path
+                d="M19.2686 19.2686L21 21M20 17.5C20 18.8807 18.8807 20 17.5 20C16.1193 20 15 18.8807 15 17.5C15 16.1193 16.1193 15 17.5 15C18.8807 15 20 16.1193 20 17.5Z"
+                stroke="#a57ff0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'approval-list-card'">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="24" r="6" stroke="#F59E0B" stroke-width="2.5" />
+            <path d="M20 44C20 37.373 25.373 32 32 32C38.627 32 44 37.373 44 44" stroke="#F59E0B" stroke-width="2.5"
+                stroke-linecap="round" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'create-quote'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M18 5L15.586 2.586C15.211 2.2109 14.7024 2.00011 14.172 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20"
+                stroke="#E7000B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+                d="M21.379 12.6261C21.7773 12.2278 22.0011 11.6875 22.0011 11.1241C22.0011 10.5608 21.7773 10.0205 21.379 9.62215C20.9806 9.22379 20.4403 9 19.877 9C19.3136 9 18.7733 9.22379 18.375 9.62215L14.365 13.6341C14.1272 13.8718 13.9532 14.1655 13.859 14.4881L13.022 17.3581C12.9969 17.4442 12.9954 17.5354 13.0176 17.6222C13.0398 17.7091 13.085 17.7883 13.1484 17.8517C13.2118 17.9151 13.291 17.9603 13.3779 17.9825C13.4647 18.0048 13.5559 18.0032 13.642 17.9781L16.512 17.1411C16.8346 17.0469 17.1283 16.8729 17.366 16.6351L21.379 12.6261Z"
+                stroke="#E7000B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8 18H9" stroke="#E7000B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </ng-container>
+    <ng-container *ngSwitchCase="'reports-analytics'">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="32" width="6" height="12" rx="2" stroke="#10B981" stroke-width="2.5" />
+            <rect x="30" y="22" width="6" height="22" rx="2" stroke="#10B981" stroke-width="2.5" />
+            <rect x="40" y="27" width="6" height="17" rx="2" stroke="#10B981" stroke-width="2.5" />
+        </svg>
+    </ng-container>
+</ng-container>

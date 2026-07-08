@@ -1,0 +1,84 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>SOV Portfolio Manager</h1>
+    <p>Manage your insurance portfolio and track key performance metrics.</p>
+  </div>
+  <div class="stats-section">
+    <div>
+      <div *ngFor="let stat of statsCards" class="stat-card" [ngClass]="stat.cardClass">
+        <div>
+          <p>{{ stat.label }}</p>
+          <h3>{{ stat.number }}</h3>
+          <div class="stat-change" [ngClass]="stat.change.type">
+            <div>
+              <app-overview-icons [icon]="stat.change.icon"></app-overview-icons>
+            </div>
+            <span>
+              <strong>{{ stat.change.percentage }}</strong>
+              <span>{{ stat.change.period }}</span>
+            </span>
+          </div>
+        </div>
+        <figure>
+          <app-overview-icons [icon]="stat.icon"></app-overview-icons>
+        </figure>
+      </div>
+    </div>
+  </div>
+  <div class="main-content-grid">
+    <div class="features-section">
+      <h2>AVALON DISTINGUISHES ITSELF THROUGH...</h2>
+      <div>
+        <article *ngFor="let feature of featureCards" class="feature-card">
+          <div [ngClass]="feature.iconClass">
+            <img [src]="feature.image" [alt]="feature.alt">
+          </div>
+          <h3 [ngClass]="feature.titleClass">{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </article>
+      </div>
+    </div>
+    <div class="recent-activity-section">
+      <div class="activity-section">
+        <header>
+          <h3>Recent Activity</h3>
+          <button>View all</button>
+        </header>
+        <ul>
+          <ng-container *ngFor="let activity of activityItems; let isLast = last">
+            <li>
+              <figure [ngClass]="activity.iconClass">
+                <app-overview-icons [icon]="activity.icon"></app-overview-icons>
+              </figure>
+              <div>
+                <p [innerHTML]="activity.text"></p>
+                <span>{{ activity.location }}</span>
+              </div>
+              <aside>
+                <time>{{ activity.time }}</time>
+                <button type="button">
+                  <app-overview-icons icon="menu-icon"></app-overview-icons>
+                </button>
+              </aside>
+            </li>
+            <hr *ngIf="!isLast">
+          </ng-container>
+        </ul>
+      </div>
+      <div class="quick-actions-section">
+        <h3>Quick Actions</h3>
+        <div>
+          <button *ngFor="let action of quickActions" [ngClass]="action.cardClass">
+            <figure>
+              <app-overview-icons [icon]="action.icon"></app-overview-icons>
+            </figure>
+            <div>
+              <h4>{{ action.title }}</h4>
+              <p>{{ action.subtitle }}</p>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

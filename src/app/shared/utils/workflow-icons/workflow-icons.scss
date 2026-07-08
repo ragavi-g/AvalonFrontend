@@ -1,0 +1,55 @@
+:host {
+    display: contents;
+}
+
+svg {
+    display: block;
+}
+
+:host-context(.workflow-shimmer) svg {
+    width: 100%;
+    height: 100%;
+}
+
+.workflow-shape__fill {
+    fill: transparent;
+}
+
+.workflow-shape__border {
+    fill: none;
+    stroke: #dddddd;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+}
+
+:host-context(.workflow-step-svg--complete) .workflow-shape__fill {
+    fill: #00996647;
+}
+
+:host-context(.workflow-step-svg--complete) .workflow-shape__border {
+    stroke: #4fb59a;
+}
+
+:host-context(.workflow-step-svg--in-progress) .workflow-shape__fill {
+    fill: #f9731629;
+}
+
+:host-context(.workflow-step-svg--in-progress) .workflow-shape__border {
+    stroke: #f0a21b;
+}
+
+:host-context(.workflow-step-svg--disabled) .workflow-shape__fill {
+    fill: transparent;
+}
+
+:host-context(.workflow-step-svg--disabled) .workflow-shape__border {
+    stroke: #dddddd;
+}
+
+:host-context(.workflow-step-svg--dead) .workflow-shape__fill {
+    fill: #fecaca;
+}
+
+:host-context(.workflow-step-svg--dead) .workflow-shape__border {
+    stroke: #dc2626;
+}

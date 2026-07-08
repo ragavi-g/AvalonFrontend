@@ -1,0 +1,181 @@
+<div class="submission-list-page">
+  <div class="submission-list-panels" role="group" aria-label="Submission list layout">
+    <section class="submission-list-panel submission-list-panel--accounts" aria-label="Account list">
+      <header>
+        <div>
+          <h3>Account List</h3>
+          <span>{{ totalItems }}</span>
+        </div>
+        <div>
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search for account" [value]="searchQuery" (input)="onSearchInput($event)" />
+          <i class="fas fa-times" (click)="clearSearch()" *ngIf="searchQuery.trim()" title="Clear search"></i>
+        </div>
+      </header>
+      <div class="account-list-content">
+        <ul>
+          <li class="account-card" *ngFor="let account of paginatedAccounts"
+            [class.active-card]="selectedAccount?.AccountID === account.AccountID" (click)="selectAccount(account)">
+            <div>
+              <h5 [class.account-card-title--green]="isAddonAccount(account)" [ngbTooltip]="account.AccountName"
+                placement="top" tooltipClass="account-list-tooltip">
+                {{ account.AccountName }}
+              </h5>
+              <div>
+                <span>
+                  {{ account.RatingPeriodName }}
+                </span>
+                <span>
+                  <i class="fas fa-circle"></i>
+                  {{ account.Entities }} {{ account.Entities === 1 ? 'Entity' : 'Entities' }}
+                </span>
+              </div>
+            </div>
+            <div>
+              <button type="button" (click)="openPolicyRater(account)">
+                Rating Screen
+              </button>
+              <div>
+                <div>
+                  <div class="status-item status-item--property" *ngIf="showPropertyIcon(account)"
+                    [ngbTooltip]="account.PolicyStatus" placement="top" tooltipClass="account-list-tooltip">
+                    <img [src]="getPropertyStatusIcon(account.PolicyStatus)" [alt]="account.PolicyStatus">
+                  </div>
+                </div>
+                <div>
+                  <div class="status-item status-item--gl" *ngIf="showGLIcon(account)"
+                    [ngbTooltip]="account.GLPolicyStatus" placement="top" tooltipClass="account-list-tooltip">
+                    <img [src]="getGlStatusIcon(account.GLPolicyStatus)" [alt]="account.GLPolicyStatus">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <footer>
+        <div>
+          <div class="items-dropdown">
+            <button type="button" (click)="toggleItemsPerPage($event)" [attr.aria-expanded]="isItemsPerPageOpen">
+              <span>{{ itemsPerPage }}</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <ul *ngIf="isItemsPerPageOpen">
+              <li *ngFor="let option of itemsPerPageOptions" [class.selected]="option === itemsPerPage"
+                (click)="selectItemsPerPage(option, $event)">
+                {{ option }}
+              </li>
+            </ul>
+          </div>
+          <span>
+            Showing {{ startItem }}-{{ endItem }} of {{ totalItems }}
+          </span>
+        </div>
+        <div>
+          <button (click)="goToFirstPage()" [disabled]="currentPage === 1">
+            <i class="fas fa-angles-left"></i>
+          </button>
+          <button (click)="previousWindow()" [disabled]="currentPage === 1">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button *ngFor="let page of visiblePages" [class.active-page]="page === currentPage" (click)="goToPage(page)">
+            {{ page }}
+          </button>
+          <button (click)="nextWindow()" [disabled]="currentPage === totalPages">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <button (click)="goToLastPage()" [disabled]="currentPage === totalPages">
+            <i class="fas fa-angles-right"></i>
+          </button>
+        </div>
+      </footer>
+    </section>
+    <section class="submission-list-panel submission-list-panel--activity" aria-label="Task and activity">
+      <div class="execute-task-section">
+        <h3 class="execute-task-title">Execute a Task</h3>
+        <div class="execute-task-controls">
+          <div class="sl-dropdown" [class.open]="isTaskDropdownOpen">
+            <button type="button" class="sl-dropdown-trigger" (click)="toggleTaskDropdown($event)"
+              [attr.aria-expanded]="isTaskDropdownOpen">
+              <span>{{ taskDropdownLabel }}</span>
+              <i class="fas fa-chevron-down sl-dropdown-chevron"></i>
+            </button>
+            <ul class="sl-dropdown-menu" *ngIf="isTaskDropdownOpen">
+              <li class="sl-dropdown-item" *ngFor="let option of executeTaskOptions"
+                [class.selected]="selectedTask?.label === option.label" (click)="selectTask(option, $event)">
+                <span class="sl-dropdown-item-label">{{ option.label }}</span>
+                <span class="sl-dropdown-item-desc">{{ option.description }}</span>
+              </li>
+            </ul>
+          </div>
+          <div class="sl-dropdown sl-dropdown--coverage" *ngIf="showCoverageDropdown"
+            [class.open]="isCoverageDropdownOpen">
+            <button type="button" class="sl-dropdown-trigger" (click)="toggleCoverageDropdown($event)"
+              [attr.aria-expanded]="isCoverageDropdownOpen">
+              <span>{{ coverageDropdownLabel }}</span>
+              <i class="fas fa-chevron-down sl-dropdown-chevron"></i>
+            </button>
+            <ul class="sl-dropdown-menu sl-dropdown-menu--coverage" *ngIf="isCoverageDropdownOpen">
+              <li class="sl-dropdown-item" *ngFor="let option of coverageOptions"
+                [class.selected]="selectedCoverage?.id === option.id" (click)="selectCoverage(option, $event)">
+                <span class="sl-dropdown-item-label">{{ option.label }}</span>
+              </li>
+            </ul>
+          </div>
+          <button type="button" class="execute-btn">Execute</button>
+        </div>
+      </div>
+      <div class="activity-section">
+        <h3 class="activity-section-title">
+          Activity -
+          <span class="activity-section-account"
+            [class.activity-section-account--green]="isAddonAccount(selectedAccount)">
+            {{ selectedAccount?.AccountName }}
+          </span>
+        </h3>
+        <div class="activity-section-content">
+          <p class="activity-empty" *ngIf="!hasActivities">No activity is there</p>
+          <div class="activity-timeline" *ngIf="hasActivities">
+            <div class="activity-timeline-item"
+              *ngFor="let activity of selectedActivities; let i = index; trackBy: trackByActivityIndex">
+              <div class="activity-timeline-rail">
+                <div class="activity-icon" [ngClass]="getActivityIconClass(activity.activity_name)">
+                  <img *ngIf="hasActivityIcon(activity.taskId)" class="activity-icon-img"
+                    [src]="getActivityIcon(activity.taskId)" [alt]="activity.activity_name" />
+                </div>
+              </div>
+              <div class="activity-timeline-body">
+                <div class="activity-meta-row">
+                  <span class="activity-date">{{ activity.activity_added_date }}</span>
+                  <div class="activity-user">
+                    <span class="activity-avatar">{{ getInitials(activity.activity_added_by) }}</span>
+                    <span class="activity-user-name">{{ activity.activity_added_by }}</span>
+                  </div>
+                </div>
+                <span class="activity-name">{{ activity.activity_name }}</span>
+                <ng-container *ngIf="isEditingActivity(i); else noteReadonly">
+                  <textarea class="activity-note-input activity-note-input--editing" [value]="editingNoteDraft"
+                    (input)="onNoteInput($event)" rows="3" autofocus></textarea>
+                  <div class="activity-note-actions">
+                    <button type="button" class="btn-cancel" (click)="cancelEditNote()">Cancel</button>
+                    <button type="button" class="btn-save" [disabled]="!isNoteModified" (click)="saveNote()">
+                      Save
+                    </button>
+                  </div>
+                </ng-container>
+                <ng-template #noteReadonly>
+                  <div class="activity-note-display" role="button" tabindex="0"
+                    (click)="startEditNote(i, activity.activity_note)"
+                    (keydown.enter)="startEditNote(i, activity.activity_note)"
+                    (keydown.space)="$event.preventDefault(); startEditNote(i, activity.activity_note)">
+                    {{ activity.activity_note }}
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

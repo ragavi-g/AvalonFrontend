@@ -1,0 +1,672 @@
+@use '../../../../assets/css/variables' as *;
+@use '../../../../assets/css/mixins' as *;
+@use '../../../../assets/css/utilities' as *;
+
+:host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.gl-rating-page {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.5vw, 16px);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: clamp(12px, 1.25vw, 16px) clamp(16px, 1.5vw, 20px) clamp(16px, 2vw, 24px);
+  background: #f3f5f8;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.gl-rating-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+  width: 100%;
+  overflow: visible;
+  position: relative;
+}
+
+.gl-rating-filter__location,
+.gl-rating-filter__rating-period {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.gl-rating-filter__rating-period {
+  margin-left: auto;
+
+  .gl-rating-filter__label {
+    font-weight: 700;
+  }
+
+  .gl-rating-badge {
+    font-size: 11px;
+    font-weight: 700;
+  }
+}
+
+.gl-rating-filter__label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: $sl-muted-dark;
+  white-space: nowrap;
+}
+
+.gl-rating-filter__dropdown {
+  position: relative;
+  flex: 0 0 280px;
+  width: 280px;
+  min-width: 280px;
+  max-width: 100%;
+
+  &.open .sl-dropdown-chevron {
+    transform: rotate(180deg);
+  }
+}
+
+.sl-dropdown-trigger {
+  width: 100%;
+  height: 36px;
+  margin: 0;
+  border: 1px solid #d7dce3;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  line-height: 1.2;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  appearance: none;
+  box-shadow: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: #94a3b8;
+    background: #ffffff;
+    color: #374151;
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.sl-dropdown-chevron {
+  font-size: 10px;
+  color: #6b7280;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+// sl- prefix avoids Bootstrap .dropdown-menu { display: none }
+.sl-dropdown-menu {
+  display: block;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.sl-dropdown-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  list-style: none;
+
+  &:hover,
+  &.selected {
+    background: #f1f5f9;
+  }
+}
+
+.sl-dropdown-item-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #16345f;
+  line-height: 1.3;
+}
+
+.gl-rating-sections {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.5vw, 16px);
+  width: 100%;
+  min-width: 0;
+}
+
+.gl-rating-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  background: $background;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  box-sizing: border-box;
+}
+
+.gl-rating-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 16px;
+  background: $sl-accent-dark;
+  color: #ffffff;
+  box-sizing: border-box;
+}
+
+.gl-rating-section__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+
+  i {
+    font-size: 14px;
+    opacity: 0.95;
+  }
+}
+
+.gl-rating-section__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.gl-rating-section__action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 1px;
+  }
+}
+
+.gl-rating-section__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.gl-rating-table-wrap {
+  --gl-rating-table-max-height: clamp(10rem, 36vh, 24rem);
+  grid-column: 1;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  max-height: var(--gl-rating-table-max-height);
+  overflow-x: auto;
+  overflow-y: auto;
+  contain: inline-size;
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #c5cdd8;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f3f6;
+  }
+}
+
+.gl-rating-table {
+  width: max-content;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: auto;
+
+  thead tr {
+    background: $section-bg;
+  }
+
+  th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    min-width: fit-content;
+    padding: 4px 8px;
+    text-align: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: $sl-muted;
+    white-space: nowrap;
+    border-bottom: 1px solid #d7dce3;
+    vertical-align: middle;
+    background: $section-bg;
+    cursor: default;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  td {
+    width: 1%;
+    padding: 7px 10px;
+    font-size: 11px;
+    font-weight: 500;
+    color: $sl-muted-dark;
+    border-bottom: 1px solid #eef1f5;
+    vertical-align: middle;
+    white-space: nowrap;
+    background: $background;
+  }
+
+  tbody tr {
+    background: $background;
+  }
+
+  tbody tr.gl-rating-table__row--alt td {
+    background: #f9fafb;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  th.gl-rating-table__sticky,
+  td.gl-rating-table__sticky {
+    position: sticky;
+    z-index: 2;
+    box-sizing: border-box;
+  }
+
+  th.gl-rating-table__sticky {
+    z-index: 4;
+    background: $section-bg;
+  }
+
+  td.gl-rating-table__sticky {
+    z-index: 2;
+    background: $background;
+  }
+
+  tbody tr.gl-rating-table__row--alt td.gl-rating-table__sticky {
+    background: #f9fafb;
+  }
+
+  th.gl-rating-table__sticky--last,
+  td.gl-rating-table__sticky--last {
+    border-right: 1px solid #c5cdd8;
+    // box-shadow: 8px 0 14px -8px rgba(0, 0, 0, 0.723);
+    box-shadow: 3px 0 3px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+.gl-rating-table__header-short {
+  display: inline-block;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.gl-rating-table__header:hover .gl-rating-table__header-short {
+  color: $sl-accent;
+}
+
+.gl-rating-table__truncate {
+  max-width: clamp(72px, 9vw, 140px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gl-rating-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: $sl-muted-dark;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.gl-rating-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+
+  i {
+    font-size: 7px;
+  }
+
+  &--submitted,
+  &--submit {
+    color: $sl-title-green;
+  }
+
+  &--review,
+  &--quote {
+    color: #ea580c;
+  }
+
+  &--indication {
+    color: #2563eb;
+  }
+
+  &--bound {
+    color: #0f766e;
+  }
+}
+
+.gl-rating-table__no-data {
+  text-align: center;
+}
+
+.gl-rating-date {
+  @include flex-between;
+  gap: 8px;
+  width: 100%;
+  position: relative;
+}
+
+.gl-rating-calendar-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  color: $sl-accent-dark;
+}
+
+.gl-rating-calendar-btn i {
+  font-size: 14px;
+}
+
+.gl-rating-datepicker {
+  position: fixed;
+  padding: 16px;
+  z-index: 2005;
+
+  &__header {
+    @include flex-between;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  &__nav {
+    @include datepicker-control-base;
+    height: 32px;
+    width: 32px;
+    @include icon-center;
+    cursor: pointer;
+
+    &:hover {
+      border-color: $sl-accent-dark;
+      color: $sl-accent-dark;
+    }
+  }
+
+  &__selects {
+    @include flex-align-center;
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  &__dropdown {
+    position: relative;
+    min-width: 100px;
+
+    &--year {
+      min-width: 75px;
+    }
+
+    &.open .gl-rating-datepicker__dropdown-chevron {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__dropdown-trigger {
+    @include datepicker-control-base;
+    width: 100%;
+    height: 32px;
+    padding: 0 12px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+    appearance: none;
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  &__dropdown-chevron {
+    font-size: 10px;
+    color: $sl-muted;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  &__dropdown-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 10;
+    margin: 0;
+    padding: 6px 0;
+    list-style: none;
+    background: $background;
+    border: 1px solid $sl-border-subtle;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
+    max-height: 240px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #c5cdd8;
+      border-radius: 2000px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f3f6;
+    }
+  }
+
+  &__dropdown-item {
+    padding: 10px 14px;
+    cursor: pointer;
+    list-style: none;
+    transition: background 0.15s ease;
+
+    &:hover{
+      background: $sl-hover-bg;
+    }
+
+    &.selected {
+      background: $sl-accent;
+    }
+  }
+
+  &__dropdown-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: $sl-accent;
+    line-height: 1.3;
+  }
+
+  &__dropdown-item.selected &__dropdown-label {
+    color: $background;
+  }
+
+  &__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 11px;
+    color: $sl-muted-dark;
+    margin-bottom: 6px;
+  }
+
+  &__days {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+
+  &__day {
+    height: 30px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 12px;
+    color: $sl-text-dark;
+
+    &:hover:not(&--selected) {
+      background: $sl-hover-soft;
+    }
+
+    &--muted {
+      color: $sl-muted-soft;
+    }
+
+    &--today {
+      border: 1px solid $sl-accent-dark;
+    }
+
+    &--selected {
+      background: $sl-accent-dark;
+      color: #ffffff;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  &__btn {
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    background: $sl-accent-dark;
+    color: #ffffff;
+
+    &--ghost {
+      @include datepicker-control-base;
+
+      &:hover {
+        border-color: $sl-accent-dark;
+        color: $sl-accent-dark;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .gl-rating-table-wrap {
+    --gl-rating-table-max-height: clamp(9rem, 30vh, 18rem);
+  }
+
+  .gl-rating-table {
+
+    th,
+    td {
+      padding: 4px 10px;
+      font-size: 10px;
+    }
+  }
+}

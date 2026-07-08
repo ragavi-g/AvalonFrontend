@@ -1,0 +1,1657 @@
+@use '../../../../assets/css/variables.scss' as *;
+@use '../../../../assets/css/mixins' as *;
+@use '../../../../assets/css/utilities' as *;
+
+.dashboard-container {
+  padding: 24px;
+  overflow-x: hidden;
+  max-width: 2400px;
+  margin: 0 auto;
+  width: $full-width;
+  box-sizing: border-box;
+
+  .dashboard-header {
+    margin-bottom: 32px;
+
+    h1 {
+      font-size: 32px;
+      font-weight: $font-weight-600;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: $font-size-16;
+      color: $black;
+      margin: 0;
+    }
+  }
+}
+
+.stats-section {
+  @include flex-start;
+  gap: 24px;
+  margin-bottom: 24px;
+
+  >div {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+}
+
+.stat-card {
+  @include base-card;
+  padding: 12px;
+  @include flex-end;
+  gap: 10px;
+
+  >div {
+    flex: 1;
+    text-align: left;
+
+    >p {
+      font-size: $font-size-14;
+      color: $black;
+    }
+
+    >h3 {
+      font-size: 28px;
+      font-weight: 700;
+      color: $text-dark;
+      margin-bottom: 4px;
+    }
+
+    .stat-change {
+      font-size: 12px;
+      display: flex;
+      @include flex-align-center;
+
+      &.positive {
+        color: $green;
+      }
+
+      &.negative {
+        color: $red;
+      }
+
+      >div:first-child {
+        app-overview-icons {
+          @include flex-align-center;
+          @include icon-container-size($icon-size-sm, null, true);
+        }
+      }
+
+      >span {
+        @include flex-align-center;
+        gap: 4px;
+
+        strong {
+          font-size: 12px;
+          font-weight: $font-weight-600;
+        }
+
+        span {
+          font-size: 12px;
+          font-weight: 400;
+          color: $black;
+        }
+      }
+    }
+  }
+
+  >figure {
+    @include icon-container-base;
+    @include icon-container-size($icon-size-lg, $icon-radius-lg);
+    margin: 0;
+  }
+}
+
+.main-content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.features-section {
+  background: $section-bg;
+  padding: 12px;
+  border-radius: 10px;
+
+  h2 {
+    font-size: 18px;
+    font-weight: $font-weight-600;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+  }
+
+  >div {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+}
+
+.feature-card {
+  @include base-card;
+  border: 1px solid $border;
+  border-radius: 16px;
+  padding: 28px;
+  @include flex-column;
+  min-width: 0;
+  width: $full-width;
+  gap: 5px;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  >div {
+    width: 110px;
+    height: 110px;
+    border-radius: 20px;
+    @include icon-center;
+    margin-bottom: 10px;
+
+    img {
+      width: 62px;
+      height: auto;
+    }
+  }
+
+  h3 {
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  p {
+    font-size: 15px;
+    color: $black;
+    line-height: 1.5;
+    flex: 1;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+}
+
+.recent-activity-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.activity-section {
+  background: $background;
+  border: 1px solid $border;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.activity-section>header {
+  @include flex-between;
+  margin-bottom: 20px;
+
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: $font-weight-600;
+  }
+}
+
+.activity-section>header button {
+  background: none;
+  border: none;
+  color: $primary-blue;
+  font-size: $font-size-14;
+  font-weight: 500;
+  cursor: $cursor-pointer;
+  padding: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.activity-section>ul {
+  @include flex-column;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.quick-actions-section {
+  padding: 20px 24px 12px 24px;
+
+  >div {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+}
+
+.activity-section li {
+  @include flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  cursor: $cursor-pointer;
+
+  >figure {
+    @include icon-container-base;
+    margin: 0;
+
+    app-overview-icons {
+      border-radius: 12px;
+      width: 48px;
+      height: 48px;
+      margin-top: 2px;
+
+      svg {
+        width: 48px !important;
+        height: 48px !important;
+      }
+    }
+  }
+
+  >div {
+    flex: 1;
+
+    p {
+      font-size: $font-size-14;
+      color: $text-dark;
+      margin-bottom: 4px;
+
+      strong {
+        font-weight: $font-weight-600;
+      }
+    }
+
+    span {
+      font-size: 12px;
+      color: $text-light;
+    }
+  }
+
+  >aside {
+    @include flex-align-center;
+    gap: 8px;
+
+    time {
+      font-size: 12px;
+      color: $text-light;
+      white-space: nowrap;
+    }
+
+    button {
+      background: none;
+      border: none;
+      padding: 0;
+
+      app-overview-icons {
+        padding: 4px;
+        border-radius: 4px;
+        cursor: $cursor-pointer;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+          background-color: $section-bg;
+        }
+
+        svg {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+hr {
+  height: 1px;
+  background-color: $border;
+  margin: 0 12px;
+
+  &:last-child {
+    display: none;
+  }
+}
+
+.quick-actions-section {
+  background: $background;
+  border: 1px solid $border;
+  border-radius: 16px;
+  padding: 20px 24px 12px 24px;
+
+  h3 {
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: $font-weight-600;
+  }
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.quick-actions-section button {
+  @include base-card;
+  @include flex-column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid $border;
+  border-radius: 12px;
+  cursor: $cursor-pointer;
+  text-align: center;
+
+  &:hover {
+    background: $section-bg;
+    transform: translateY(-1px);
+  }
+
+  >figure {
+    @include icon-container-base;
+    @include icon-container-size($icon-size-md);
+    margin: 0;
+  }
+
+  >div {
+    flex: 1;
+    text-align: center;
+    width: $full-width;
+
+    >h4 {
+      font-size: 13px;
+      font-weight: $font-weight-600;
+      color: $text-dark;
+      margin-bottom: 2px;
+    }
+
+    >p {
+      font-size: 11px;
+      color: $text-light;
+      line-height: 1.3;
+    }
+  }
+}
+
+@media (min-width: $screen-large) {
+  .dashboard-container {
+    padding: 40px;
+
+    .dashboard-header {
+      h1 {
+        font-size: 40px;
+      }
+
+      p {
+        font-size: 18px;
+      }
+    }
+  }
+
+  .stats-section {
+    gap: 32px;
+    margin-bottom: 40px;
+
+    >div {
+      gap: 32px;
+    }
+  }
+
+  .stat-card {
+    padding: 32px;
+
+    >div>h3 {
+      font-size: 36px;
+    }
+
+    >figure {
+      app-overview-icons {
+        width: 80px;
+        height: 80px;
+
+        svg {
+          width: 80px;
+          height: 80px;
+        }
+      }
+    }
+  }
+
+  .main-content-grid {
+    gap: 40px;
+  }
+
+  .features-section {
+    padding: 40px;
+
+    >div {
+      grid-template-columns: repeat(4, minmax(220px, 1fr));
+      gap: 32px;
+    }
+  }
+
+  .feature-card {
+    padding: 32px;
+
+    >div {
+      width: 100px;
+      height: 100px;
+
+      img {
+        width: 56px;
+      }
+
+      svg {
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: $font-size-16;
+    }
+  }
+
+  .activity-section,
+  .quick-actions-section {
+    padding: 28px 32px 16px 32px;
+  }
+
+  .recent-activity-section {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+
+    .quick-actions-section>div {
+      gap: 16px;
+    }
+  }
+
+  .quick-actions-section button {
+    padding: 20px;
+
+    >figure {
+      app-overview-icons {
+        width: 56px;
+        height: 56px;
+
+        svg {
+          width: 56px;
+          height: 56px;
+        }
+      }
+    }
+
+    h4 {
+      font-size: $font-size-14;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+}
+
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .dashboard-container {
+    padding: 36px;
+  }
+
+  .dashboard-header {
+    h1 {
+      font-size: 38px;
+    }
+
+    p {
+      font-size: 17px;
+    }
+  }
+
+  .main-content-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .stats-section {
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+
+  .stats-section>div {
+    gap: 24px;
+  }
+
+  .stat-card {
+    padding: 28px;
+  }
+
+  .stat-card>div>h3 {
+    font-size: 32px;
+  }
+
+  .features-section {
+    padding: 36px;
+  }
+
+  .features-section>div {
+    grid-template-columns: repeat(4, minmax(220px, 1fr));
+    gap: 28px;
+  }
+
+  .feature-card {
+    padding: 28px;
+  }
+
+  .feature-card>div {
+    width: 110px;
+    height: 110px;
+
+    img {
+      width: 62px;
+    }
+
+    svg {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  .feature-card h3 {
+    font-size: 17px;
+  }
+
+  .feature-card p {
+    font-size: 15px;
+  }
+
+  .recent-activity-section {
+    gap: 28px;
+  }
+
+  .activity-section,
+  .quick-actions-section {
+    padding: 28px;
+  }
+
+  .quick-actions-section>div {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .quick-actions-section button {
+    padding: 18px;
+  }
+
+  .quick-actions-section button h4 {
+    font-size: $font-size-14;
+  }
+
+  .quick-actions-section button p {
+    font-size: 12px;
+  }
+
+  .activity-section li>figure app-overview-icons {
+    width: 48px;
+    height: 48px;
+
+    svg {
+      width: 48px;
+      height: 48px;
+    }
+  }
+}
+
+@media (min-width: 1366px) and (max-width: 1599px) {
+  .dashboard-container {
+    padding: 32px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 36px;
+  }
+
+  .main-content-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .stats-section {
+    margin-bottom: 32px;
+  }
+
+  .features-section {
+    padding: 32px;
+  }
+
+  .features-section>div {
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .feature-card {
+    padding: 20px;
+  }
+
+  .feature-card>div {
+    width: 90px;
+    height: 90px;
+
+    img {
+      width: 48px;
+    }
+
+    svg {
+      width: 28px;
+      height: 28px;
+    }
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1366px) {
+  .dashboard-container {
+    padding: 28px;
+
+    .dashboard-header {
+      h1 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: $font-size-16;
+      }
+    }
+  }
+
+  .main-content-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .features-section>div {
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .recent-activity-section {
+    gap: 10px;
+
+    .activity-section,
+    .quick-actions-section {
+      padding: 20px 24px 12px 24px;
+    }
+
+    .quick-actions-section>div {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+  }
+
+  .stats-section {
+    gap: 20px;
+
+    >div {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+  }
+
+  .stat-card {
+    >div>h3 {
+      font-size: 28px;
+    }
+
+    >figure {
+      height: 64px;
+
+      app-overview-icons {
+        width: 64px;
+        height: 64px;
+
+        svg {
+          width: 64px;
+          height: 64px;
+        }
+      }
+    }
+  }
+
+  .feature-card {
+    padding: 24px;
+
+    >div {
+      width: 100px;
+      height: 100px;
+
+      img {
+        width: 56px;
+      }
+    }
+
+    h3 {
+      font-size: $font-size-16;
+    }
+
+    p {
+      font-size: $font-size-14;
+    }
+  }
+
+  .quick-actions-section button {
+    padding: 8px;
+    flex-direction: column;
+    text-align: center;
+    gap: 4px;
+
+    >figure {
+      app-overview-icons {
+        width: 40px;
+        height: 40px;
+
+        svg {
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
+
+    h4 {
+      font-size: 13px;
+    }
+
+    p {
+      font-size: 11px;
+    }
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1279px) {
+  .main-content-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .recent-activity-section {
+    gap: 24px;
+  }
+
+  .stats-section {
+    gap: 16px;
+  }
+
+  .stats-section>div {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 20px;
+  }
+
+  .stat-change {
+    font-size: 8px;
+  }
+
+  .stat-card>figure {
+    app-overview-icons {
+      width: 56px;
+      height: 56px;
+    }
+
+    height: 56px;
+
+    svg {
+      width: 56px;
+      height: 56px;
+    }
+  }
+
+  .stat-card>div>h3 {
+    font-size: 20px;
+  }
+
+  .features-section>div {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .feature-card {
+    gap: 5px
+  }
+
+  .feature-card>div {
+    width: 85px;
+    height: 85px;
+
+    img {
+      width: 46px;
+    }
+
+    svg {
+      width: 26px;
+      height: 26px;
+    }
+  }
+
+  .feature-card h3 {
+    font-size: $font-size-14;
+  }
+
+  .feature-card p {
+    font-size: 13px;
+  }
+
+  .quick-actions-section>div {
+    gap: 8px;
+  }
+
+  .quick-actions-section button {
+    padding: 6px;
+    flex-direction: column;
+    text-align: center;
+    gap: 3px;
+  }
+
+  .quick-actions-section button h4 {
+    font-size: 12px;
+  }
+
+  .quick-actions-section button p {
+    font-size: 10px;
+  }
+
+  .activity-section li {
+    padding: 0px;
+    margin-top: 5px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .dashboard-container {
+    padding: 20px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 28px;
+  }
+
+  .main-content-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .recent-activity-section {
+    gap: 20px;
+  }
+
+  .stats-section {
+    gap: 12px;
+  }
+
+  .stats-section>div {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 16px;
+  }
+
+  .stat-card>figure {
+    app-overview-icons {
+      width: 48px;
+      height: 48px;
+    }
+
+    height: 48px;
+
+    svg {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  .stat-card>div>h3 {
+    font-size: 22px;
+  }
+
+  .stat-card>div>p {
+    font-size: 13px;
+  }
+
+  .features-section {
+    padding: 24px;
+  }
+
+  .features-section {
+    padding: 24px;
+  }
+
+  .features-section>div {
+    grid-template-columns: repeat(4, minmax(180px, 1fr));
+    gap: 12px;
+  }
+
+  .feature-card {
+    padding: 16px;
+  }
+
+  .feature-card>div {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 12px;
+
+    img {
+      width: 42px;
+    }
+
+    svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .feature-card h3 {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .feature-card p {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
+  .activity-section,
+  .quick-actions-section {
+    padding: 16px 20px 10px 20px;
+  }
+
+  .quick-actions-section>div {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .quick-actions-section button {
+    padding: 12px;
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dashboard-container {
+    padding: 16px;
+  }
+
+  .dashboard-header {
+    h1 {
+      font-size: 24px;
+    }
+
+    p {
+      font-size: $font-size-14;
+    }
+  }
+
+  .main-content-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .stats-section {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .stats-section>div {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 16px;
+  }
+
+  .stat-card>div>h3 {
+    font-size: 20px;
+  }
+
+  .features-section {
+    padding: 20px;
+  }
+
+  .features-section>div {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .feature-card {
+    padding: 20px;
+  }
+
+  .recent-activity-section {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .quick-actions-section>div {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 767px) {
+  .dashboard-container {
+    padding: 12px;
+
+    .dashboard-header {
+      h1 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: $font-size-14;
+      }
+    }
+  }
+
+  .main-content-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .features-section {
+    padding: 16px;
+
+    h2 {
+      font-size: $font-size-16;
+    }
+
+    >div {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+
+  .stats-section {
+    flex-direction: column;
+    gap: 12px;
+
+    >div {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+  }
+
+  .stat-card {
+    padding: 12px;
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+
+    >div {
+      h3 {
+        font-size: 18px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+    }
+
+    >figure {
+      app-overview-icons {
+        width: 40px;
+        height: 40px;
+
+        svg {
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
+  }
+
+  .feature-card {
+    padding: 16px;
+
+    >div {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 8px;
+
+      img {
+        width: 44px;
+      }
+    }
+
+    h3 {
+      font-size: 12px;
+    }
+
+    p {
+      font-size: 11px;
+    }
+  }
+
+  .recent-activity-section {
+    grid-template-columns: 1fr;
+    gap: 16px;
+
+    .activity-section,
+    .quick-actions-section {
+      padding: 14px 16px 8px 16px;
+    }
+
+    .quick-actions-section>div {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+  }
+
+  .quick-actions-section button {
+    padding: 6px;
+    flex-direction: column;
+    text-align: center;
+    gap: 3px;
+
+    >figure {
+      app-overview-icons {
+        width: 32px;
+        height: 32px;
+
+        svg {
+          width: 32px;
+          height: 32px;
+        }
+      }
+    }
+
+    h4 {
+      font-size: 11px;
+    }
+
+    p {
+      font-size: 9px;
+    }
+  }
+
+  .activity-section li {
+    gap: 8px;
+    padding: 0;
+
+    >figure app-overview-icons {
+      width: 24px;
+      height: 24px;
+
+      svg {
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    >div {
+      p {
+        font-size: 12px;
+      }
+
+      span {
+        font-size: 10px;
+      }
+    }
+
+    >aside time {
+      font-size: 10px;
+    }
+  }
+}
+
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .dashboard-container {
+    padding: 48px;
+    max-width: 2200px;
+    margin: 0 auto;
+  }
+
+  .dashboard-header {
+    h1 {
+      font-size: 42px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+  }
+
+  .stats-section {
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+
+  .stats-section>div {
+    gap: 32px;
+  }
+
+  .stat-card {
+    padding: 36px;
+  }
+
+  .stat-card>div>h3 {
+    font-size: 38px;
+  }
+
+  .main-content-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .features-section {
+    padding: 40px;
+  }
+
+  .features-section>div {
+    grid-template-columns: repeat(4, minmax(240px, 1fr));
+    gap: 32px;
+  }
+
+  .feature-card {
+    padding: 36px;
+  }
+
+  .feature-card>div {
+    width: 120px;
+    height: 120px;
+
+    img {
+      width: 68px;
+    }
+
+    svg {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .feature-card h3 {
+    font-size: 18px;
+  }
+
+  .feature-card p {
+    font-size: $font-size-16;
+  }
+
+  .recent-activity-section {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    max-width: none;
+  }
+
+  .activity-section,
+  .quick-actions-section {
+    padding: 32px;
+  }
+
+  .quick-actions-section>div {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .quick-actions-section button {
+    padding: 20px;
+  }
+
+  .quick-actions-section button>figure app-overview-icons {
+    width: 72px;
+    height: 72px;
+
+    svg {
+      width: 72px;
+      height: 72px;
+    }
+  }
+
+  .quick-actions-section button h4 {
+    font-size: 15px;
+  }
+
+  .quick-actions-section button p {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 2400px) {
+  .main-content-grid {
+    gap: 60px;
+  }
+
+  .dashboard-container {
+    padding: 32px 60px;
+  }
+}
+
+@media (min-width: $screen-qhd) {
+  .dashboard-container {
+    padding: 48px 60px;
+  }
+
+  .dashboard-header {
+    h1 {
+      font-size: 52px;
+    }
+
+    p {
+      font-size: 20px;
+    }
+  }
+
+  .stats-section {
+    gap: 40px;
+    margin-bottom: 36px;
+  }
+
+  .stats-section>div {
+    gap: 40px;
+  }
+
+  .stat-card {
+    padding: 40px;
+  }
+
+  .stat-card>div>h3 {
+    font-size: 42px;
+  }
+
+  .stat-card>div>p {
+    font-size: $font-size-16;
+  }
+
+  .main-content-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .features-section {
+    padding: 48px;
+  }
+
+  .features-section>div {
+    grid-template-columns: repeat(4, minmax(260px, 1fr));
+    gap: 40px;
+  }
+
+  .feature-card {
+    padding: 40px;
+    border-radius: 24px;
+  }
+
+  .feature-card>div {
+    width: 140px;
+    height: 140px;
+
+    img {
+      width: 80px;
+    }
+
+    svg {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  .feature-card h3 {
+    font-size: 22px;
+  }
+
+  .feature-card p {
+    font-size: 20px;
+  }
+
+  .features-section h2,
+  .section-header h3,
+  .quick-actions-section h3 {
+    font-size: 28px;
+  }
+
+  .recent-activity-section {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .activity-section,
+  .quick-actions-section {
+    padding: 40px;
+  }
+
+  .quick-actions-section>div {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .quick-actions-section button {
+    padding: 24px;
+  }
+
+  .quick-actions-section button>figure app-overview-icons {
+    width: 80px;
+    height: 80px;
+
+    svg {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  .quick-actions-section button h4 {
+    font-size: $font-size-16;
+  }
+
+  .quick-actions-section button p {
+    font-size: $font-size-14;
+  }
+}
+
+@media (max-height: 900px) and (min-width: 769px) {
+  .dashboard-container {
+    padding: 8px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 26px;
+    margin-bottom: 16px;
+  }
+
+  .features-section {
+    padding: 18px;
+  }
+
+  .features-section h2 {
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
+
+  .features-section>div {
+    gap: 14px;
+  }
+
+  .feature-card {
+    padding: 18px;
+  }
+
+  .feature-card>div {
+    width: 75px;
+    height: 75px;
+    margin-bottom: 14px;
+
+    img {
+      width: 42px;
+    }
+  }
+
+  .feature-card h3 {
+    font-size: $font-size-14;
+    margin-bottom: 10px;
+  }
+
+  .feature-card p {
+    font-size: 12px;
+    line-height: 1.25rem;
+    margin-bottom: 0px;
+  }
+}
+
+@media (max-height: 768px) and (min-width: 769px) {
+  .dashboard-container {
+    padding: 6px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .features-section {
+    padding: 14px;
+  }
+
+  .features-section h2 {
+    font-size: $font-size-14;
+    margin-bottom: 12px;
+  }
+
+  .features-section>div {
+    gap: 12px;
+  }
+
+  .feature-card {
+    padding: 14px;
+  }
+
+  .feature-card>div {
+    width: 65px;
+    height: 65px;
+    margin-bottom: 10px;
+
+    img {
+      width: 36px;
+    }
+  }
+
+  .feature-card h3 {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .feature-card p {
+    font-size: 11px;
+    line-height: 1.2rem;
+  }
+}
+
+@media (max-height: 650px) and (min-width: 769px) {
+  .dashboard-container {
+    padding: 8px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .features-section {
+    padding: 10px;
+  }
+
+  .features-section h2 {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .features-section>div {
+    gap: 8px;
+  }
+
+  .feature-card {
+    padding: 12px;
+  }
+
+  .feature-card>div {
+    width: 55px;
+    height: 55px;
+    margin-bottom: 8px;
+
+    img {
+      width: 30px;
+    }
+  }
+
+  .feature-card h3 {
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+
+  .feature-card p {
+    font-size: 10px;
+    line-height: 1.1rem;
+  }
+}
+
+@media (max-height: 600px) and (min-width: 769px) {
+  .dashboard-container {
+    padding: 10px;
+    margin: 0;
+  }
+
+  .dashboard-header h1 {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+
+  .features-section {
+    padding: 15px;
+  }
+
+  .features-section h2 {
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+
+  .features-section>div {
+    gap: 6px;
+  }
+
+  .feature-card {
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .feature-card>div {
+    width: 45px;
+    height: 45px;
+    margin-bottom: 6px;
+    border-radius: 12px;
+
+    img {
+      width: 26px;
+    }
+  }
+
+  .feature-card h3 {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+
+  .feature-card p {
+    font-size: 12px;
+    line-height: 1rem;
+  }
+}

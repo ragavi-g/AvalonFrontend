@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+  box-sizing: border-box;
+}
+
+:host > app-gl-rating,
+:host > app-account-summary,
+:host > app-property-rating,
+:host > app-gl-rating-summary,
+:host > app-api-results {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}

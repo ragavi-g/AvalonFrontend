@@ -1,0 +1,18 @@
+<aside class="sidebar d-flex flex-column h-100" [attr.aria-hidden]="!isOpen">
+  <div class="sidebar-scroll flex-grow-1 overflow-y-auto overflow-x-hidden min-w-0">
+    <nav class="nav flex-column w-100">
+      @for (item of navItems; track item.path) {
+      <a class="nav-link d-flex align-items-center" [routerLink]="['/', item.path]"
+        [class.active]="isActive(item.path)">
+        @if (isSidebarIconId(item.icon)) {
+        <app-sidebar-nav-icon class="nav-icon me-1" [icon]="item.icon" />
+        } @else {
+        <i class="nav-icon flex-shrink-0 me-1" [class]="item.icon"></i>
+        }
+        <span class="nav-label min-w-0">{{ item.label }}</span>
+      </a>
+      }
+    </nav>
+  </div>
+
+</aside>

@@ -1,0 +1,553 @@
+<div class="gl-rating-page">
+  <div class="gl-rating-filter">
+    <div class="gl-rating-filter__location">
+      <label class="gl-rating-filter__label" id="gl-rating-location-label">Location</label>
+      <div class="sl-dropdown gl-rating-filter__dropdown" [class.open]="isLocationDropdownOpen">
+        <button type="button" id="gl-rating-location" class="sl-dropdown-trigger"
+          aria-labelledby="gl-rating-location-label" [attr.aria-expanded]="isLocationDropdownOpen"
+          (click)="toggleLocationDropdown($event)">
+          <span>{{ locationDropdownLabel }}</span>
+          <i class="fas fa-chevron-down sl-dropdown-chevron" aria-hidden="true"></i>
+        </button>
+        @if (isLocationDropdownOpen) {
+        <ul class="sl-dropdown-menu">
+          @for (option of locationOptions; track option.value) {
+          <li class="sl-dropdown-item" [class.selected]="selectedLocation === option.value"
+            (click)="selectLocation(option.value, $event)">
+            <span class="sl-dropdown-item-label">{{ option.label }}</span>
+          </li>
+          }
+        </ul>
+        }
+      </div>
+    </div>
+    @if (ratingPeriod) {
+    <div class="gl-rating-filter__rating-period">
+      <span class="gl-rating-filter__label">Rating Period : [{{ ratingPeriod }}]</span>
+    </div>
+    }
+  </div>
+  <div class="gl-rating-sections">
+    <section class="gl-rating-section">
+      <header class="gl-rating-section__header">
+        <div class="gl-rating-section__title">
+          <i class="fa-regular fa-file-lines"></i>
+          <span>Policy Inputs</span>
+        </div>
+        <div class="gl-rating-section__actions">
+          <button type="button" class="gl-rating-section__action-btn" aria-label="Refresh Policy Inputs"
+            (click)="refreshPolicyInputs()">
+            <i class="fas fa-sync-alt" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="gl-rating-section__action-btn" aria-label="Edit Policy Inputs">
+            <i class="fas fa-pen" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="gl-rating-section__action-btn"
+            [attr.aria-expanded]="sectionExpanded.policyInputs" aria-label="Toggle Policy Inputs section"
+            (click)="toggleSection('policyInputs')">
+            <i class="fas" [class.fa-chevron-up]="sectionExpanded.policyInputs"
+              [class.fa-chevron-down]="!sectionExpanded.policyInputs" aria-hidden="true"></i>
+          </button>
+        </div>
+      </header>
+      @if (sectionExpanded.policyInputs) {
+      <div class="gl-rating-section__body">
+        <div class="gl-rating-table-wrap">
+          <table class="gl-rating-table">
+            @if (policyInputsLoading) {
+            <div class="gl-rating-loader"></div>
+            }
+            @else if (policyInputs.length > 0) {
+            <thead>
+              <tr>
+                <th class="gl-rating-table__header gl-rating-table__header--actions"
+                  [class.gl-rating-table__sticky]="isStickyColumn('policyInputs', 'actions')"
+                  [class.gl-rating-table__sticky--last]="
+                      isLastStickyColumn('policyInputs', 'actions', policyInputStickyColumns)
+                    " [style.left.px]="
+                      getStickyLeft('policyInputs', 'actions', policyInputStickyColumns)
+                    " [style.minWidth.px]="getStickyWidth('policyInputs', 'actions')" aria-label="Actions">
+                  <span class="gl-rating-table__header-short"></span>
+                </th>
+                @for (column of policyInputColumns; track column.key) {
+                <th class="gl-rating-table__header"
+                  [class.gl-rating-table__sticky]="isStickyColumn('policyInputs', column.key)"
+                  [class.gl-rating-table__sticky--last]="
+                      isLastStickyColumn('policyInputs', column.key, policyInputStickyColumns)
+                    " [style.left.px]="getStickyLeft('policyInputs', column.key, policyInputStickyColumns)"
+                  [style.minWidth.px]="getStickyWidth('policyInputs', column.key)" [attr.title]="
+                      getColumnHeaderTitle(
+                        column.label,
+                        getPolicyInputColumnMaxLength(column.key),
+                        isPolicyInputWideColumn(column.key)
+                      )
+                    " [attr.aria-label]="column.label">
+                  <span class="gl-rating-table__header-short">{{
+                    getColumnHeaderLabel(
+                    column.label,
+                    getPolicyInputColumnMaxLength(column.key),
+                    isPolicyInputWideColumn(column.key)
+                    )
+                    }}</span>
+                </th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of policyInputs; track trackPolicyInput(row, i); let i = $index) {
+              <tr [class.gl-rating-table__row--alt]="i % 2 === 1">
+                <td class="gl-rating-table__actions"
+                  [class.gl-rating-table__sticky]="isStickyColumn('policyInputs', 'actions')"
+                  [class.gl-rating-table__sticky--last]="
+                      isLastStickyColumn('policyInputs', 'actions', policyInputStickyColumns)
+                    " [style.left.px]="
+                      getStickyLeft('policyInputs', 'actions', policyInputStickyColumns)
+                    " [style.minWidth.px]="getStickyWidth('policyInputs', 'actions')">
+                  <button type="button" class="gl-rating-table__action-btn" aria-label="Add endorsement"
+                    (click)="addRowBySection('policyInputs', row, i)">
+                    <i class="fas fa-plus" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="gl-rating-table__action-btn" aria-label="Delete endorsement"
+                    (click)="openDeleteModal('policyInputs', i)">
+                    <i class="fas fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+                @for (column of policyInputColumns; track column.key) {
+                <td [class.gl-rating-table__sticky]="isStickyColumn('policyInputs', column.key)"
+                  [class.gl-rating-table__sticky--last]="
+                        isLastStickyColumn('policyInputs', column.key, policyInputStickyColumns)
+                      " [style.left.px]="getStickyLeft('policyInputs', column.key, policyInputStickyColumns)"
+                  [style.minWidth.px]="getStickyWidth('policyInputs', column.key)" [class.gl-rating-table__truncate]="
+                        column.key === 'entity_name' ||
+                        column.key === 'address' ||
+                        column.key === 'location_description'
+                      " [attr.title]="getPolicyInputCellValue(row, column)">
+                  @switch (column.type) {
+                  @case ('badge') {
+                  @if (getPolicyInputCellValue(row, column)) {
+                  <span class="gl-rating-badge">
+                    [{{ getPolicyInputCellValue(row, column) }}]
+                  </span>
+                  }
+                  }
+                  @case ('status') {
+                  @if (getPolicyInputCellValue(row, column)) {
+                  <span class="gl-rating-status"
+                    [class.gl-rating-status--submitted]="isSubmittedStatus(getPolicyInputCellValue(row, column))"
+                    [class]="'gl-rating-status gl-rating-status--' +getRatingStatusModifier(getPolicyInputCellValue(row, column))">
+                    <i class="fas fa-circle" aria-hidden="true"></i>
+                    {{ getPolicyInputCellValue(row, column) }}
+                  </span>
+                  }
+                  }
+                  @default {
+                  @if (isDateColumn(column.key)) {
+                  <div class="gl-rating-date">
+                    <ng-container *ngTemplateOutlet="datePickerTemplate; context: {
+                      row: row,
+                      columnKey: column.key,
+                      value: getPolicyInputCellValue(row, column)
+                    }"></ng-container>
+                  </div>
+                  }
+                  @else {
+                  {{ getPolicyInputCellValue(row, column) }}
+                  }
+                  }
+                  }
+                </td>
+                }
+              </tr>
+              }
+            </tbody>
+            } @else if (policyInputsLoaded) {
+            <tbody>
+              <tr>
+                <td class="gl-rating-table__no-data" [attr.colspan]="policyInputColumns.length + 1">
+                  No data found
+                </td>
+              </tr>
+            </tbody>
+            }
+          </table>
+        </div>
+      </div>
+      }
+    </section>
+    <section class="gl-rating-section">
+      <header class="gl-rating-section__header">
+        <div class="gl-rating-section__title">
+          <i class="fas fa-search" aria-hidden="true"></i>
+          <span>Underwriting Review</span>
+        </div>
+        <div class="gl-rating-section__actions">
+          <button type="button" class="gl-rating-section__action-btn" aria-label="Refresh Underwriting Review"
+            (click)="refreshUnderwritingReview()">
+            <i class="fas fa-sync-alt" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="gl-rating-section__action-btn" aria-label="Edit Underwriting Review">
+            <i class="fas fa-pen" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="gl-rating-section__action-btn"
+            [attr.aria-expanded]="sectionExpanded.underwritingReview" aria-label="Toggle Underwriting Review section"
+            (click)="toggleSection('underwritingReview')">
+            <i class="fas" [class.fa-chevron-up]="sectionExpanded.underwritingReview"
+              [class.fa-chevron-down]="!sectionExpanded.underwritingReview" aria-hidden="true"></i>
+          </button>
+        </div>
+      </header>
+      @if (sectionExpanded.underwritingReview) {
+      <div class="gl-rating-section__body">
+        <div class="gl-rating-table-wrap">
+          <table class="gl-rating-table">
+            @if (underwritingReviewLoading) {
+            <div class="gl-rating-loader"></div>
+            }
+            @else if (underwritingReview.length > 0) {
+            <thead>
+              <tr>
+                <th class="gl-rating-table__header gl-rating-table__header--actions"
+                  [class.gl-rating-table__sticky]="isStickyColumn('underwritingReview', 'actions')"
+                  [class.gl-rating-table__sticky--last]="
+                      isLastStickyColumn('underwritingReview', 'actions', underwritingReviewStickyColumns)
+                    " [style.left.px]="
+                      getStickyLeft('underwritingReview', 'actions', underwritingReviewStickyColumns)
+                    " [style.minWidth.px]="getStickyWidth('underwritingReview', 'actions')" aria-label="Actions">
+                  <span class="gl-rating-table__header-short"></span>
+                </th>
+                @for (column of underwritingReviewColumns; track column.key) {
+                <th class="gl-rating-table__header" [class.gl-rating-table__sticky]="
+                      isStickyColumn('underwritingReview', column.key)
+                    " [class.gl-rating-table__sticky--last]="
+                      isLastStickyColumn('underwritingReview', column.key, underwritingReviewStickyColumns)
+                    " [style.left.px]="
+                      getStickyLeft('underwritingReview', column.key, underwritingReviewStickyColumns)
+                    " [style.minWidth.px]="getStickyWidth('underwritingReview', column.key)" [attr.title]="
+                      getColumnHeaderTitle(
+                        column.label,
+                        getUnderwritingReviewColumnMaxLength(column.key),
+                        isUnderwritingReviewWideColumn(column.key)
+                      )
+                    " [attr.aria-label]="column.label">
+                  <span class="gl-rating-table__header-short">{{
+                    getColumnHeaderLabel(
+                    column.label,
+                    getUnderwritingReviewColumnMaxLength(column.key),
+                    isUnderwritingReviewWideColumn(column.key)
+                    )
+                    }}</span>
+                </th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of underwritingReview; track trackUnderwritingReview(row, i); let i = $index) {
+              <tr [class.gl-rating-table__row--alt]="i % 2 === 1">
+                <td class="gl-rating-table__actions"
+                  [class.gl-rating-table__sticky]="isStickyColumn('underwritingReview', 'actions')"
+                  [class.gl-rating-table__sticky--last]="
+                      isLastStickyColumn('underwritingReview', 'actions', underwritingReviewStickyColumns)
+                    " [style.left.px]="
+                      getStickyLeft('underwritingReview', 'actions', underwritingReviewStickyColumns)
+                    " [style.minWidth.px]="getStickyWidth('underwritingReview', 'actions')">
+                  <button type="button" class="gl-rating-table__action-btn" aria-label="Add endorsement"
+                    (click)="addRowBySection('underwritingReview', row, i)">
+                    <i class="fas fa-plus" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="gl-rating-table__action-btn" aria-label="Delete endorsement"
+                    (click)="openDeleteModal('underwritingReview', i)">
+                    <i class="fas fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+                @for (column of underwritingReviewColumns; track column.key) {
+                <td [class.gl-rating-table__sticky]="
+                        isStickyColumn('underwritingReview', column.key)
+                      " [class.gl-rating-table__sticky--last]="
+                        isLastStickyColumn('underwritingReview', column.key, underwritingReviewStickyColumns)
+                      " [style.left.px]="
+                        getStickyLeft('underwritingReview', column.key, underwritingReviewStickyColumns)
+                      " [style.minWidth.px]="getStickyWidth('underwritingReview', column.key)"
+                  [class.gl-rating-table__truncate]="
+                        column.key === 'EntityName' ||
+                        column.key === 'IRPMLocationInsideNotes' ||
+                        column.key === 'IRPMLocationOutsideNotes' ||
+                        column.key === 'IRPMEquipmentNotes' ||
+                        column.key === 'IRPMClassificationNotes' ||
+                        column.key === 'IRPMCooperationNotes' ||
+                        column.key === 'Location_Description'
+                      " [attr.title]="getUnderwritingReviewCellValue(row, column)">
+                  @if (isDateColumn(column.key)) {
+                  <div class="gl-rating-date">
+                    <ng-container *ngTemplateOutlet="datePickerTemplate; context: {
+                      row: row,
+                      columnKey: column.key,
+                      value: getUnderwritingReviewCellValue(row, column)
+                    }"></ng-container>
+                  </div>
+                  }
+                  @else {
+                  {{ getUnderwritingReviewCellValue(row,column) }}
+                  }
+                </td>
+                }
+              </tr>
+              }
+            </tbody>
+            } @else if (underwritingReviewLoaded) {
+            <tbody>
+              <tr>
+                <td class="gl-rating-table__no-data" [attr.colspan]="underwritingReviewColumns.length + 1">
+                  No data found
+                </td>
+              </tr>
+            </tbody>
+            }
+          </table>
+        </div>
+      </div>
+      }
+    </section>
+    <section class="gl-rating-section">
+      <header class="gl-rating-section__header">
+        <div class="gl-rating-section__title">
+          <i class="fas fa-calculator" aria-hidden="true"></i>
+          <span>Rating</span>
+        </div>
+        <div class="gl-rating-section__actions">
+          <button type="button" class="gl-rating-section__action-btn" aria-label="Refresh Rating"
+            (click)="refreshGLRatingScreen()">
+            <i class="fas fa-sync-alt" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="gl-rating-section__action-btn" aria-label="Edit Rating">
+            <i class="fas fa-pen" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="gl-rating-section__action-btn" [attr.aria-expanded]="sectionExpanded.rating"
+            aria-label="Toggle Rating section" (click)="toggleSection('rating')">
+            <i class="fas" [class.fa-chevron-up]="sectionExpanded.rating"
+              [class.fa-chevron-down]="!sectionExpanded.rating" aria-hidden="true"></i>
+          </button>
+        </div>
+      </header>
+      @if (sectionExpanded.rating) {
+      <div class="gl-rating-section__body">
+        <div class="gl-rating-table-wrap">
+          <table class="gl-rating-table">
+            @if (ratingLoading) {
+            <div class="gl-rating-loader"></div>
+            }
+            @else if (ratingRows.length > 0){
+            <thead>
+              <tr>
+                <th class="gl-rating-table__header gl-rating-table__header--actions"
+                  [class.gl-rating-table__sticky]="isStickyColumn('rating', 'actions')"
+                  [class.gl-rating-table__sticky--last]="
+                      isLastStickyColumn('rating', 'actions', ratingStickyColumns)
+                    " [style.left.px]="
+                      getStickyLeft('rating', 'actions', ratingStickyColumns)
+                    " [style.minWidth.px]="getStickyWidth('rating', 'actions')" aria-label="Actions">
+                  <span class="gl-rating-table__header-short"></span>
+                </th>
+                @for (column of ratingColumns; track column.key) {
+                <th class="gl-rating-table__header"
+                  [class.gl-rating-table__sticky]="isStickyColumn('rating', column.key)"
+                  [class.gl-rating-table__sticky--last]="
+                      isLastStickyColumn('rating', column.key, ratingStickyColumns)
+                    " [style.left.px]="getStickyLeft('rating', column.key, ratingStickyColumns)"
+                  [style.minWidth.px]="getStickyWidth('rating', column.key)" [attr.title]="
+                      getColumnHeaderTitle(
+                        column.label,
+                        getRatingColumnMaxLength(column.key),
+                        isRatingWideColumn(column.key)
+                      )
+                    " [attr.aria-label]="column.label">
+                  <span class="gl-rating-table__header-short">{{
+                    getColumnHeaderLabel(
+                    column.label,
+                    getRatingColumnMaxLength(column.key),
+                    isRatingWideColumn(column.key)
+                    )
+                    }}</span>
+                </th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of ratingRows; track trackRating(row, i); let i = $index) {
+              <tr [class.gl-rating-table__row--alt]="i % 2 === 1">
+                <td class="gl-rating-table__actions"
+                  [class.gl-rating-table__sticky]="isStickyColumn('rating', 'actions')"
+                  [class.gl-rating-table__sticky--last]="
+                      isLastStickyColumn('rating', 'actions', ratingStickyColumns)
+                    " [style.left.px]="
+                      getStickyLeft('rating', 'actions', ratingStickyColumns)
+                    " [style.minWidth.px]="getStickyWidth('rating', 'actions')">
+                  <button type="button" class="gl-rating-table__action-btn" aria-label="Add endorsement"
+                    (click)="addRowBySection('rating', row, i)">
+                    <i class="fas fa-plus" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="gl-rating-table__action-btn" aria-label="Delete endorsement"
+                    (click)="openDeleteModal('rating', i)">
+                    <i class="fas fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+                @for (column of ratingColumns; track column.key) {
+                <td [class.gl-rating-table__sticky]="isStickyColumn('rating', column.key)"
+                  [class.gl-rating-table__sticky--last]="
+                        isLastStickyColumn('rating', column.key, ratingStickyColumns)
+                      " [style.left.px]="getStickyLeft('rating', column.key, ratingStickyColumns)"
+                  [style.minWidth.px]="getStickyWidth('rating', column.key)" [class.gl-rating-table__truncate]="
+                        column.key === 'EntityName' ||
+                        column.key === 'Address' ||
+                        column.key === 'primary_parking_exposurebasis' ||
+                        column.key === 'secondary_parking_exposurebasis' ||
+                        column.key === 'tertiary_parking_exposurebasis'
+                      " [attr.title]="getRatingCellValue(row, column)">
+                  @switch (column.type) {
+                  @case ('status') {
+                  @if (getRatingCellValue(row, column)) {
+                  <span class="gl-rating-status gl-rating-status--{{
+                                getRatingStatusModifier(getRatingCellValue(row, column))
+                              }}">
+                    <i class="fas fa-circle" aria-hidden="true"></i>
+                    {{ getRatingCellValue(row, column) }}
+                  </span>
+                  }
+                  }
+                  @default {
+                  @if (isDateColumn(column.key)) {
+
+                  <div class="gl-rating-date">
+                    <ng-container *ngTemplateOutlet="datePickerTemplate; context: {
+                      row: row,
+                      columnKey: column.key,
+                      value: getRatingCellValue(row, column)
+                    }"></ng-container>
+                  </div>
+                  }
+                  @else {
+                  {{ getRatingCellValue(row,column) }}
+                  }
+                  }
+                  }
+                </td>
+                }
+              </tr>
+              }
+            </tbody>
+            }@else if (ratingLoaded) {
+            <tbody>
+              <tr>
+                <td class="gl-rating-table__no-data" [attr.colspan]="ratingColumns.length + 1">
+                  No data found
+                </td>
+              </tr>
+            </tbody>
+            }
+          </table>
+        </div>
+      </div>
+      }
+    </section>
+  </div>
+  <ng-template #datePickerTemplate let-row="row" let-columnKey="columnKey" let-value="value">
+    <span>{{ formatDateDisplay(value) }}</span>
+    <button type="button" class="gl-rating-calendar-btn" (click)="openDatePicker(row, columnKey, $event)">
+      <i class="fas fa-calendar-alt"></i>
+    </button>
+    @if (isDatePickerOpen(row, columnKey)) {
+    <div class="gl-rating-datepicker u-datepicker-surface" [style.top.px]="datePickerPosition.top"
+      [style.left.px]="datePickerPosition.left" (click)="onDatePickerClick($event)">
+      <div class="gl-rating-datepicker__header">
+        <button type="button" class="gl-rating-datepicker__nav" (click)="changeMonth(-1)">
+          <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <div class="gl-rating-datepicker__selects">
+          <div class="gl-rating-datepicker__dropdown" [class.open]="isMonthDropdownOpen">
+            <button type="button" class="gl-rating-datepicker__dropdown-trigger" (click)="toggleMonthDropdown($event)">
+              <span>{{ monthOptions[datePickerViewMonth]?.label }}</span>
+              <i class="fas fa-chevron-down gl-rating-datepicker__dropdown-chevron" aria-hidden="true"></i>
+            </button>
+            @if (isMonthDropdownOpen) {
+            <ul class="gl-rating-datepicker__dropdown-menu">
+              @for (option of monthOptions; track option.value) {
+              <li class="gl-rating-datepicker__dropdown-item" [class.selected]="option.value === datePickerViewMonth"
+                (click)="selectMonth(option.value, $event)">
+                <span class="gl-rating-datepicker__dropdown-label">{{ option.label }}</span>
+              </li>
+              }
+            </ul>
+            }
+          </div>
+          <div class="gl-rating-datepicker__dropdown gl-rating-datepicker__dropdown--year"
+            [class.open]="isYearDropdownOpen">
+            <button type="button" class="gl-rating-datepicker__dropdown-trigger" (click)="toggleYearDropdown($event)">
+              <span>{{ datePickerViewYear }}</span>
+              <i class="fas fa-chevron-down gl-rating-datepicker__dropdown-chevron" aria-hidden="true"></i>
+            </button>
+            @if (isYearDropdownOpen) {
+            <ul class="gl-rating-datepicker__dropdown-menu">
+              @for (year of yearOptions; track year) {
+              <li class="gl-rating-datepicker__dropdown-item" [class.selected]="year === datePickerViewYear"
+                (click)="selectYear(year, $event)">
+                <span class="gl-rating-datepicker__dropdown-label">{{ year }}</span>
+              </li>
+              }
+            </ul>
+            }
+          </div>
+        </div>
+        <button type="button" class="gl-rating-datepicker__nav" (click)="changeMonth(1)">
+          <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="gl-rating-datepicker__weekdays">
+        @for (weekday of weekdayLabels; track weekday) {
+        <span>{{ weekday }}</span>
+        }
+      </div>
+      <div class="gl-rating-datepicker__days">
+        @for (week of calendarWeeks; track week[0].key) {
+        <div class="gl-rating-datepicker__week">
+          @for (day of week; track day.key) {
+          <button type="button" class="gl-rating-datepicker__day"
+            [class.gl-rating-datepicker__day--muted]="!day.isCurrentMonth"
+            [class.gl-rating-datepicker__day--today]="day.isToday"
+            [class.gl-rating-datepicker__day--selected]="day.isSelected" (click)="selectDate(day)">
+            {{ day.label }}
+          </button>
+          }
+        </div>
+        }
+      </div>
+      <div class="gl-rating-datepicker__footer">
+        <button type="button" class="gl-rating-datepicker__btn gl-rating-datepicker__btn--ghost"
+          (click)="cancelDate()">Cancel</button>
+        <button type="button" class="gl-rating-datepicker__btn" (click)="applyDate()">Apply</button>
+      </div>
+    </div>
+    }
+  </ng-template>
+  @if (isDeleteModalOpen) {
+  <div class="modal-backdrop fade show" (click)="cancelDelete()"></div>
+  <div class="modal fade show d-block" tabindex="-1" role="dialog" aria-modal="true" (click)="cancelDelete()">
+    <div class="modal-dialog modal-dialog-centered" role="document" (click)="$event.stopPropagation()">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Delete</h5>
+          <button type="button" class="btn-close gl-rating-modal__close" aria-label="Close"
+            (click)="cancelDelete()"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0">Are you sure you want to delete this row?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary gl-rating-modal__btn"
+            (click)="cancelDelete()">No</button>
+          <button type="button" class="btn btn-primary gl-rating-modal__btn gl-rating-modal__btn--primary"
+            (click)="confirmDelete()">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

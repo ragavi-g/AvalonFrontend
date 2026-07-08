@@ -1,0 +1,65 @@
+<nav class="topbar" [class.sidebar-open]="sidebarOpen()" aria-label="Main navigation">
+  <div class="topbar-brand px-3">
+    <button type="button" class="btn btn-link p-0 sidebar-toggle" (click)="onMenuClick()"
+      aria-label="Toggle navigation menu">
+      <i class="bi bi-list"></i>
+    </button>
+    <a class="topbar-brand__logo p-0 m-0" href="/">
+      <img src="images/avalonLogo.png" alt="Avalon Risk Management" class="logo" />
+    </a>
+  </div>
+
+  <div class="topbar-main px-3">
+    <div class="topbar-main__inner">
+      <div class="topbar-main__start">
+        @if (isPolicyRater ? ratingScreenTitle : pageLabel()) {
+        <h1 class="topbar-page-title">
+          {{ isPolicyRater ? ratingScreenTitle : pageLabel() }}
+        </h1>
+        }
+        @if (isPolicyRater && accountName) {
+        <div class="topbar-rating-details">
+          <span class="topbar-rating-details__separator" aria-hidden="true"></span>
+          <span class="topbar-rating-details__account">{{ accountName }}</span>
+          <span class="topbar-rating-details__status">Active</span>
+        </div>
+        }
+      </div>
+      <div class="topbar-main__actions d-flex align-items-center gap-3">
+        <button type="button" class="btn btn-link p-0 topbar-icon-btn topbar-notifications-btn"
+          aria-label="Notifications"
+          [attr.aria-describedby]="notificationCount() > 0 ? 'topbar-notification-count' : null">
+          <span class="topbar-notifications-btn__icon" aria-hidden="true">
+            <i class="fa-regular fa-bell"></i>
+            @if (notificationCount() > 0) {
+            <span id="topbar-notification-count" class="topbar-notifications-btn__badge">
+              {{ notificationCount() > 99 ? '99+' : notificationCount() }}
+            </span>
+            }
+          </span>
+        </button>
+        <button type="button" class="btn btn-link p-0 topbar-icon-btn topbar-help-btn" aria-label="Help">
+          <i class="fa-regular fa-circle-question"></i>
+        </button>
+        <div class="topbar-user-menu" [class.is-open]="userMenuOpen()">
+          <button type="button" class="btn btn-link p-0 topbar-user-trigger" (click)="toggleUserMenu($event)"
+            [attr.aria-expanded]="userMenuOpen()" aria-haspopup="true" aria-label="User profile menu">
+            <span class="topbar-user-avatar">
+              <span class="topbar-user-avatar__initial">{{ userInitial }}</span>
+            </span>
+          </button>
+          @if (userMenuOpen()) {
+          <div class="topbar-user-menu__panel" role="dialog" aria-label="User details">
+            <p class="topbar-user-menu__email">{{ userEmail }}</p>
+            <hr class="topbar-user-menu__divider" />
+            <button type="button" class="topbar-user-menu__logout">
+              <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+              Logout
+            </button>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

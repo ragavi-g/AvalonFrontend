@@ -1,0 +1,74 @@
+<div class="workflow-header">
+  <div>
+    <button type="button" (click)="toggleMenu($event)" aria-label="More actions">
+      <app-workflow-icons icon="actions-menu"></app-workflow-icons>
+    </button>
+    @if (menuOpen) {
+    <div class="workflow-menu" role="menu">
+      <div>More Actions</div>
+      <button type="button" role="menuitem">
+        <span>
+          <app-workflow-icons icon="track-claims"></app-workflow-icons>
+        </span>
+        <span>Track Claims</span>
+      </button>
+      <button type="button" role="menuitem">
+        <span>
+          <app-workflow-icons icon="edit-account"></app-workflow-icons>
+        </span>
+        <span>Edit Account</span>
+      </button>
+      <button type="button" role="menuitem">
+        <span>
+          <app-workflow-icons icon="add-contact"></app-workflow-icons>
+        </span>
+        <span>Add Contact</span>
+      </button>
+    </div>
+    }
+  </div>
+  <div>
+    @for (step of workflowSteps; track step.id;) {
+    <div class="workflow-step-svg" [ngClass]="getStepClasses(step)">
+      <div>
+        @if (step.svgVariant === 'active') {
+        <div class="active-outline">
+          <app-workflow-icons icon="outline-left"></app-workflow-icons>
+          <div class="outline-center"></div>
+          <app-workflow-icons icon="outline-right"></app-workflow-icons>
+        </div>
+        <div class="workflow-shimmer" aria-hidden="true">
+          <app-workflow-icons icon="workflow-shimmer"></app-workflow-icons>
+        </div>
+        }
+        <div>
+          <app-workflow-icons icon="workflow-shape-left"></app-workflow-icons>
+          <div class="step-center">
+            <div class="workflow-step" [class.workflow-step--disabled]="step.state === 'disabled'">
+              @if (step.iconType === 'image') {
+              <img [src]="step.icon" [alt]="step.label" />
+              }
+              <div>
+                <span [ngClass]="getTitleClasses(step)">
+                  {{ step.label }}
+                </span>
+                <span [ngClass]="getMetaClasses(step)">
+                  {{ step.meta }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <app-workflow-icons icon="workflow-shape-right"></app-workflow-icons>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  <div class="policy-rater-navbar">
+    @for (item of navItems; track item.path) {
+    <a [routerLink]="[item.path]" routerLinkActive="active">
+      {{ item.label }}
+    </a>
+    }
+  </div>
+</div>
